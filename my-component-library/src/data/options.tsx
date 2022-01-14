@@ -1,15 +1,15 @@
-import React from "react";
-import { FiCircle } from "react-icons/fi";
+import React from 'react';
+import { FiCircle, FiGrid, FiList } from 'react-icons/fi';
 
 export const options1 = [
-  { value: "Leading", content: "Leading" },
-  { value: "Middle", content: "Middle" },
-  { value: "Trailing", content: "Trailing" },
+  { value: 'Leading', content: 'Leading' },
+  { value: 'Middle', content: 'Middle' },
+  { value: 'Trailing', content: 'Trailing' },
 ];
 
 export const options2 = [
   {
-    value: "first",
+    value: 'first',
     content: (
       <>
         <FiCircle size={20} className="mr-2" /> First
@@ -17,7 +17,7 @@ export const options2 = [
     ),
   },
   {
-    value: "second",
+    value: 'second',
     content: (
       <>
         <FiCircle size={20} className="mr-2" /> Second
@@ -25,11 +25,30 @@ export const options2 = [
     ),
   },
   {
-    value: "third",
+    value: 'third',
     content: (
       <>
         <FiCircle size={20} className="mr-2" /> Third
       </>
     ),
+  },
+];
+
+export const options3 = [
+  {
+    content: (
+      <>
+        <FiList size={20} />{' '}
+      </>
+    ),
+    value: 'list',
+  },
+  {
+    content: (
+      <>
+        <FiGrid size={20} />{' '}
+      </>
+    ),
+    value: 'grid',
   },
 ];

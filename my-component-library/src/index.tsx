@@ -3,18 +3,18 @@ export * from './Button';
 
 export * from './Badge';
 
-// export * from './ButtonGroup';
-// export * from './ColorBox';
-// export * from './Paginate';
-// export * from './RentalCard';
-// export * from './Select';
-// export * from './TextInput';
-// export * from './Typography';
+export * from './ButtonGroup';
+export * from './ColorBox';
+export * from './Paginate';
+export * from './RentalCard';
+export * from './Select';
+export * from './TextInput';
+export * from './Typography';
 
-// export * from './nav/SideNav';
-// export * from './nav/MobileNavbar';
+export * from './nav/SideNav';
+export * from './nav/MobileNavBar';
 
-// export * from './@interfaces';
+export * from './@interfaces';
 export * from './data';
 export * from './data/images';
 
@@ -32,7 +32,7 @@ export * from './data/images';
 //  */
 // export const Thing: FC<Props> = ({ children }) => {
 //   return (
-//     <div className="mt-10 bg-yellow-100 p-5 rounded-md">
+//     <div className="p-5 mt-10 bg-yellow-100 rounded-md">
 //       {children || `the snozzberries taste like snozzberries`}
 //     </div>
 //   );
