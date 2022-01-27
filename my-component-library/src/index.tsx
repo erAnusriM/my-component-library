@@ -17,6 +17,8 @@ export * from './nav/MobileNavBar';
 export * from './@interfaces';
 export * from './data';
 export * from './data/images';
+export * from './OTPField';
+
 
 // import React, { FC, HTMLAttributes, ReactChild } from 'react';
 
