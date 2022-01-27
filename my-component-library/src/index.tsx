@@ -5,6 +5,7 @@ export * from './Badge';
 
 export * from './ButtonGroup';
 export * from './ColorBox';
+export * from './OTPField';
 export * from './Paginate';
 export * from './RentalCard';
 export * from './Select';
@@ -17,7 +18,6 @@ export * from './nav/MobileNavBar';
 export * from './@interfaces';
 export * from './data';
 export * from './data/images';
-export * from './OTPField';
 
 
 // import React, { FC, HTMLAttributes, ReactChild } from 'react';

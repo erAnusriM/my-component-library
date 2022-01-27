@@ -20,7 +20,7 @@ export default function ErrorMessage(props: MessageProps): JSX.Element {
 	const {
 		children,
 		className: { passedClassName } = {},
-		style: { passedStyle } = {},
+		style: passedStyle = {},
 	} = props;
 
 	const errorStyles = makeStyles({
@@ -35,14 +35,13 @@ export default function ErrorMessage(props: MessageProps): JSX.Element {
 			fontFamily: "Work Sans",
 			fontWeight: 400,
 			color: "#FC4A43",
-			...passedStyle,
 		},
 	});
 
 	const errorClass = errorStyles();
 
 	return (
-		<FormHelperText className={cls("xs:text-xs md:text-xl", errorClass.root, passedClassName)}>
+		<FormHelperText className={cls("xs:text-xs md:text-md lg:text-lg", errorClass.root , passedClassName)} style={passedStyle}>
 			{children}
 		</FormHelperText>
 	);

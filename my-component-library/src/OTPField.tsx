@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, FC } from 'react';
 import Input from '@material-ui/core/Input';
 import {
   makeStyles,
@@ -113,15 +113,14 @@ interface OtpData {
   id: string | number | null;
 }
 
-interface OTPProps {
+export interface OTPProps {
   onChangeOtpData: (data: string) => void;
-  errorMessage: string | undefined;
+  errorMessage?: string | null;
   errorMessageStyle?: any;
-  style?: any;
+  disabled?: boolean;
 }
 
-export const OTPField = (props: OTPProps) => {
-  const { onChangeOtpData } = props;
+export const OTPField: FC<OTPProps>  = ({onChangeOtpData, errorMessage, errorMessageStyle, disabled}) => {
 
   const [data, setData] = useState<OtpData[]>([
     { id: '' },
@@ -247,17 +246,19 @@ export const OTPField = (props: OTPProps) => {
                 'focus:outline-none bg-transparent dark:text-gray-400 dark:before:border-b-gray-400',
                 pickerClass.root
               )}
+              disabled={disabled}
+              error={errorMessage}
             />
           ))}
       </div>
-      <div className={cls('py-5', props.errorMessageStyle)}>
-        <ErrorMessage>{props.errorMessage}</ErrorMessage>
+      <div className={cls('py-5')}>
+        <ErrorMessage style={errorMessageStyle}>{errorMessage || ""}</ErrorMessage>
       </div>
       </ThemeProvider>
   );
 };
 
-function NumericInput(props: any) {
+const NumericInput = (props: any) => {
   const { onChange, ...restProps } = props;
 
   const isValid = (str: string) => {
@@ -276,7 +277,7 @@ function NumericInput(props: any) {
   );
 }
 
-function CustomInput(props: any) {
+const CustomInput = (props: any) => {
   const { inputRef, ...restProps } = props;
   return <Input ref={inputRef} {...restProps} />;
 }
