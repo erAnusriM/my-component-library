@@ -10,7 +10,7 @@ import {
 import { createTheme as createMuiTheme } from '@material-ui/core';
 import ErrorMessage from './ErrorMessage';
 import cls from 'classnames';
-import './index.css';
+
 
 // const CustomInputField = withStyles({
 //   palette: {
