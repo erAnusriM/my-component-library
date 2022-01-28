@@ -14,7 +14,6 @@ export interface ButtonGroupProps<T> {
 
 export const ButtonGroup = <T extends unknown>(props: ButtonGroupProps<T>) => {
   const { active, setActive, options } = props;
-  console.log('props is ', props);
   return (
     <>
       {options.map((option, index) => {

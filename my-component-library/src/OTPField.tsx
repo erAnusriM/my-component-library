@@ -1,113 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useRef, useState, useEffect, FC } from 'react';
-import Input from '@material-ui/core/Input';
-import {
-  makeStyles,
-  ThemeProvider,
-  // createStyles,
-} from '@material-ui/core/styles';
-// import { withStyles } from '@material-ui/styles';
-import { createTheme as createMuiTheme } from '@material-ui/core';
 import ErrorMessage from './ErrorMessage';
+import Label from './Label';
 import cls from 'classnames';
-
-
-// const CustomInputField = withStyles({
-//   palette: {
-//     primary: {
-//       main: '#00CE76',
-//     },
-
-//     error: {
-//       main: '#FC4A43',
-//     },
-//   },
-
-//   root: {
-//     '& .MuiInputBase-input': {
-//       borderRadius: 20,
-//       borderColor: 'red',
-//       border: '1px solid transparent !important',
-//       outline: 'none !important',
-//     },
-//     '& input': {
-//       height: 47,
-//     },
-
-//     '& .MuiInput-input': {
-//       borderRadius: 5,
-//       borderColor: 'red',
-//       border: '1px solid transparent !important',
-//       outline: 'none !important',
-//     },
-//     '& .MuiOutlinedInput-input:focused': {
-//       borderColor: 'green',
-//     },
-//   },
-//   focus: {
-//     '& .MuiInput-input': {
-//       borderRadius: 5,
-//       borderBottom: "red",
-//       borderColor: 'red',
-//       border: '1px solid transparent !important',
-//       outline: 'none !important',
-//     },
-//   }
-// })(Input);
-
-// const inputStyle = makeStyles({
-//   root: {
-//     '&:hover $notchedOutline': {
-//       borderColor: 'orange',
-//     },
-//   },
-//   focused: {},
-//   notchedOutline: {},
-// });
-
-const theme = (createMuiTheme as any)({
-  palette: {
-    primary: {
-      main: '#00CE76',
-    },
-
-    error: {
-      main: '#FC4A43',
-    },
-  },
-  overrides: {
-
-  },
-});
-
-// const useStyles = makeStyles(() =>
-//   createStyles({
-//     root: {
-//       padding: '0px',
-//       '&.Mui-focused': {
-//         border: '2px solid green',
-//       },
-//       '&.MuiInput-focused': {
-//         border: '2px solid green',
-//       },
-//     },
-//   })
-// );
-
-const pickerStyles = makeStyles({
-  root: {
-    border: '0px',
-    width: '100%',
-    height: '1px',
-    fontSize: '36px',
-    fontWeight: 'bolder',
-    padding: '20px 0px 20px 0px',
-    marginTop: '20px',
-    marginRight: '20px',
-    alignContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 interface OtpData {
   id: string | number | null;
@@ -116,12 +11,22 @@ interface OtpData {
 export interface OTPProps {
   onChangeOtpData: (data: string) => void;
   errorMessage?: string | null;
-  errorMessageStyle?: any;
+  errorMessageStyle?: CSSStyleDeclaration;
   disabled?: boolean;
+  labelText?:  string | undefined;
+  labelStyle?: CSSStyleDeclaration;
+  id: any;
 }
 
-export const OTPField: FC<OTPProps>  = ({onChangeOtpData, errorMessage, errorMessageStyle, disabled}) => {
-
+export const OTPField: FC<OTPProps> = ({
+  onChangeOtpData,
+  errorMessage,
+  errorMessageStyle,
+  disabled,
+  labelText,
+  id,
+  labelStyle
+}) => {
   const [data, setData] = useState<OtpData[]>([
     { id: '' },
     { id: '' },
@@ -131,10 +36,8 @@ export const OTPField: FC<OTPProps>  = ({onChangeOtpData, errorMessage, errorMes
     { id: '' },
   ]);
 
-  const otpInputRef = useRef<typeof Input[]>([]);
+  const otpInputRef = useRef<typeof HTMLInputElement[]>([]);
   otpInputRef.current = [];
-
-  const pickerClass = pickerStyles();
 
   useEffect(() => {
     let otp = '';
@@ -154,7 +57,7 @@ export const OTPField: FC<OTPProps>  = ({onChangeOtpData, errorMessage, errorMes
   }, [data]);
 
   useEffect(() => {
-    const node = document.getElementById('data-0');
+    const node = document.getElementById(`data-${id}-0`);
     node?.focus();
   }, []);
 
@@ -170,7 +73,7 @@ export const OTPField: FC<OTPProps>  = ({onChangeOtpData, errorMessage, errorMes
         tabIndex += 1;
     }
 
-    const node = document.getElementById(`data-${tabIndex}`);
+    const node = document.getElementById(`data-${id}-${tabIndex}`);
     console.log('node is', node);
     node?.focus();
   };
@@ -212,49 +115,56 @@ export const OTPField: FC<OTPProps>  = ({onChangeOtpData, errorMessage, errorMes
     }
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          height: 30
-        }}
-      >
+   return (
+    <>
+    {labelText && 
+      <div>
+        <Label error={!errorMessage === false} text={labelText} style={labelStyle}/>
+      </div>  
+    }
+      <div className="flex flex-row justify-between h-8 align-middle xs:min-w-full">
         {data &&
           Object.keys(data).map((item, index) => (
             <NumericInput
-              key={[item]}
-              id={`data-${index}`}
+              key={item}
+              id={`data-${id}-${index}`}
               type="tel"
               size={1}
               autoFocus={true}
               value={data[index].id || ''}
               inputRef={otpInputRef}
-              inputProps={{
-                autoFocus: true,
-                style: {
-                  textAlign: 'center',
-                },
-              }}
               onKeyDown={(e: any) => handleOnKeyDown(index, e)}
               onChange={(e: any) => handleOnChange(index, e)}
               fullWidth={true}
               className={cls(
-                'focus:outline-none bg-transparent dark:text-gray-400 dark:before:border-b-gray-400',
-                pickerClass.root
+                'first:mr-5 last:mr-0 mr-5 mb-1 block xs:w-1/6 xs:px-3 py-2 border-transparent shadow-none bg-transparent dark:text-gray-400 dark:before:border-b-gray-400 border-b-2 placeholder-slate-400 focus:outline-none border-b-gray-200 focus:ring-0 focus:border-b-success-500 focus:border-transparent disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none',
+                {
+                  'border-b-error-500 focus:border-b-error-500':
+                    !errorMessage === false,
+                }
               )}
+              style={{
+                textAlign: 'center',
+                webkitTextSecurity: 'disc',
+                height: '1px',
+                fontSize: '36px',
+                fontWeight: 'bolder',
+                padding: '20px 0px 30px 0px',
+                // marginTop: '20px',
+                alignContent: 'center',
+                alignItems: 'center',
+              }}
               disabled={disabled}
               error={errorMessage}
             />
           ))}
       </div>
-      <div className={cls('py-5')}>
-        <ErrorMessage style={errorMessageStyle}>{errorMessage || ""}</ErrorMessage>
+      <div>
+        <ErrorMessage style={errorMessageStyle}>
+          {errorMessage || ''}
+        </ErrorMessage>
       </div>
-      </ThemeProvider>
+    </>
   );
 };
 
@@ -275,9 +185,10 @@ const NumericInput = (props: any) => {
   return (
     <CustomInput {...restProps} onChange={(e: any) => handleOnChange(e)} />
   );
-}
+};
 
 const CustomInput = (props: any) => {
   const { inputRef, ...restProps } = props;
-  return <Input ref={inputRef} {...restProps} />;
-}
+
+  return <input ref={inputRef} {...restProps} />;
+};
